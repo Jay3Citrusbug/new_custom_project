@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Campaigns Action</title>
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/datatables.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/fonts/graphik_font.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/dataTables.bootstrap5.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/custom_select_2.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/icons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/agency_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/agency_settings.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/broadcast.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/campaign_creation.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/campaign_modals.css' %}">
+</head>
+<body>
+    {% csrf_token %}
+    <div class="trigger_overlay"></div>
+    <header class="rw_header_wrapper">
+        <div class="rw_header_inner">            
+            <div class="header_title camp_header_title">
+                <a href="{% url 'campaign' %}" class="back_arrow"><img src="{% static '/assets/images/icons/camp_back_arrow.svg' %}" alt="back_arrow"></a>
+                <div id="camp_name"></div>
+                <a id="edit_name_btn" draggable="false">
+                    <img  src="{% static '/assets/images/icons/edit_dark.svg' %}" class="camp_edit_icon" alt="edit">
+                </a>
+                {% comment %} <a href="javascript:;" class="" id="campaign_name">Campaign 2022-12-26 TO 11:09
+                    <img src="{% static '/assets/images/icons/edit_dark.svg' %}" class="camp_edit_icon" alt="edit">
+                </a> {% endcomment %} 
+            </div>
+            
+            <div class="header_profile">
+                <a href="javascript:;">
+                    <h4>Jones Ferdinand</h4>
+                    <div class="header_profile_image">
+                        <img src="{% static '/assets/images/profile.jpg' %}" alt="image">
+                    </div>
+                </a>
+            </div>
+            <div class="rw_hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="rw_sidebar">
+            <div class="header_logo">
+                <a href="{% url 'campaign' %}"><img src="{% static '/assets/images/logo.svg' %}" alt="logo"></a>
+            </div>
+            <ul>
+                {% comment %} <li><a href="{% url 'client_dashboard' %}" ><img src="{% static '/assets/images/icons/dashboard.svg' %}" alt="dashboard"></a></li>
+                <li><a href="client_contact.html"><img src="{% static '/assets/images/icons/contact.svg' %}" alt="contact"></a></li>
+                <li><a href="client_list.html"><img src="{% static '/assets/images/icons/bar.svg' %}" alt="bar"></a></li>
+                <li><a href="client_scheduled_broadcast.html"><img src="{% static '/assets/images/icons/broadcast.svg' %}" alt="broadcast"></a></li> {% endcomment %}
+                <li><a href="{% url 'campaign' %}" class="active"><img src="{% static '/assets/images/icons/campaigns.svg' %}" alt="campaigns"></a></li>
+                {% comment %} <li><a href="coupon.html"><img src="{% static '/assets/images/icons/coupon.svg' %}" alt="coupon"></a></li>
+                <li><a href="campaign_settings.html"><img src="{% static '/assets/images/icons/settings.svg' %}" alt="settings"></a></li> {% endcomment %}
+            </ul>
+        </div>
+    </header>
+    <div class="rw_inner_area rw_inner_form_area">
+        <div class="rw_tabs">
+            <ul class="nav rw_tab_ul" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a href="javascript:;" class="active tab_link" id="campaigns_action_tab" data-bs-toggle="tab" data-bs-target="#campaigns_action" role="tab" aria-selected="true">actions</a>                  
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a href="javascript:;" class="tab_link" id="campaigns_setting_tab" data-bs-toggle="tab" data-bs-target="#campaigns_setting" role="tab"  aria-selected="false">Settings</a>
+                </li>
+              </ul>
+              
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div class="tab-pane active" id="campaigns_action" role="tabpanel" >
+                    <div class="rw_inner_form_inner_area camp_creation_inner">
+                        <div class="campaigns_action_content">
+                            <div class="compaign_section_1">
+                                <div class="camp_text_section" >
+
+                                    <!--Text Message Modal-->
+                                     <div class="modal fade rw_modal campaign_modal add_contact" id="text_message_title_id_popup" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal_title">
+                                                    <h4>Text Message</h4>
+                                                </div>
+                                            <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="campaigns_action_content">
+                                                    <div class="campaigns_box text_message_box">
+                                                        <div class="textmessage_box_header">
+                                                            
+                                                            <div class="text_message_title">
+                                                                <img src="{% static '/assets/images/icons/message.svg' %}" alt="message">
+                                                                <h5>Text Message</h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text_input_box">
+                                                            <textarea  ></textarea>
+                                                            <div class="input_icon_wrapper">
+                                                                <div class="input_words">
+                                                                    <p>50/200 characters</p>
+                                                                </div>
+                                                                <div class="input_icons">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;"><img src="{% static '/assets/images/icons/link_gradient.svg' %}" alt="image"></a></li>
+                                                                        <li><a href="javascript:;"><img src="{% static '/assets/images/icons/add_box.svg' %}" alt="image"></a></li>
+                                                                        <li><a href="javascript:;"><img src="{% static '/assets/images/icons/sentiment_satisfied.svg' %}" alt="image"></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>                                    
+                                                        </div>
+                                                        <div class="textmessage_footer">
+                                                            <ul>
+                                                                <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                <li><a href="javascript:;">cancel</a></li>
+                                                                <li><a href="javascript:;" class="rw_btn">save</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Time Delay Modal-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact" id="time_delay_title_id_popup" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal_title">
+                                                    <h4>Time Delay</h4>
+                                                </div>
+                                            <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="campaigns_action_content">
+                                                    <div class="campaigns_box time_delay">
+                                                        <div class="textmessage_box_header">
+                                                            
+                                                            <div class="text_message_title">
+                                                                <img src="{% static '/assets/images/icons/time.svg' %}" alt="time">
+                                                                <h5>Time Delay</h5>
+                                                            </div>
+                                                        </div>
+                                                        <p>
+                                                            Choose minutes/hours/days delay for your campaign by selecting below fields
+                                                        </p>
+                                                        <div class="time_delay_inputs choose_time">
+                                                            <div class="time_delay_input_box">
+                                                                <div class="rw_form_inputs">
+                                                                    <div class="rw_dropdown">
+                                                                        <div class="select_dropdown">
+
+                                                                            <select id="time">
+                                                                                <option value="minute">Minute(s)</option>
+                                                                                <option value="hours">Hour(s)</option>
+                                                                                <option value="day">Day(s)</option>
+                                                                            </select>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="rw_form_inputs">
+                                                                    <div class="rw_input">
+                                                                        <input type="number" placeholder="Number" value="10" min="1" class="quanti-invitati3">
+                                                                        <ul class="input_spinner">
+                                                                            <li class="quanti-invitati-op3" data-op="1"><img src="{% static '/assets/images/icons/sort_up.svg' %}" alt=""></li>
+                                                                            <li class="quanti-invitati-op3" data-op="-1"><img src="{% static '/assets/images/icons/sort_down.svg' %}" alt=""></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="textmessage_footer">
+                                                            <ul>
+                                                                <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                <li><a href="javascript:;">cancel</a></li>
+                                                                <li><a href="javascript:;" class="rw_btn">save</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Wait Until Modal-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact rw_select2_modal" id="wait_until_title_id_popup" tabindex="-1"
+                                    aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Wait Until</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <img src="{% static '/assets/images/icons/close.svg'%}" alt="close">
+                                                    </a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" id="wait_until_form">
+                                                        {%csrf_token%}
+                                                        <input type="hidden" name="campaign_form_name" value="{{campaign_name}}">
+                                                        <input type="hidden" name="order">
+                                                        <div class="campaigns_action_content">
+                                                            <div class="campaigns_box trigger wait_until">
+                                                                <div class="textmessage_box_header">
+
+                                                                    <div class="text_message_title">
+                                                                        <img src="{% static '/assets/images/icons/wait.svg'%}" alt="wait">
+                                                                        <h5>Wait Until</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <p>
+                                                                    Choose time for your campaign by selecting below fields
+                                                                </p>
+
+                                                                <ul class="trigger_ul">
+                                                                    <li>
+                                                                        <div class="rw_form_inputs p-0">
+                                                                            <label class="rw_form_label">Select Time</label>
+                                                                            <div class="choose_time">
+                                                                                <div class="rw_input">
+                                                                                    <div class="rw_dropdown">
+                                                                                        <div class="select_dropdown">
+                                                                                            <select id="hour" name="hour">
+                                                                                                <option value="">Hours</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form_error" id="hour_error"></div>
+                                                                                <span>:</span>
+                                                                                <div class="rw_input">
+                                                                                    <div class="rw_dropdown">
+                                                                                        <div class="select_dropdown">
+                                                                                            <select id="minute" name="minute">
+                                                                                                <option value="">Minute</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form_error" id="minute_error"></div>
+                                                                                <span>:</span>
+                                                                                <div class="rw_input">
+                                                                                    <div class="rw_dropdown am_pm_drop">
+                                                                                        <div class="select_dropdown">
+                                                                                            <select id="time_am" name="time_am">
+                                                                                                <option value="AM">AM</option>
+                                                                                                <option value="PM">PM</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form_error" id="wait_error"></div>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="textmessage_footer">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                        <li><a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">cancel</a></li>
+                                                                        <li><a href="javascript:;" class="rw_btn" id="wait_until_btn">save</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Select Tag Action Model -->
+                                    <div class="modal fade rw_modal campaign_modal add_contact" id="select_tag_trigger" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Select Tag Trigger</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <div class="campaigns_box camp_absolute trigger_select_tags_box ">
+                                                            <div class="textmessage_box_header">
+                                                                <div class="text_message_title">
+                                                                    <img src="{% static '/assets/images/icons/flash_on.svg' %}" alt="trigger">
+                                                                    <h5>Trigger</h5>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="rw_input">
+                                                                <label class="rw_form_label">Select Tags</label></br></br>
+                                                                <div class="rw_dropdown">
+                                                                    <div class="select_dropdown">
+                                                                        <select id="tag_action" class="form-control" multiple>
+                                                                            <option selected="selected">vip</option>
+                                                                            <option >demo</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="textmessage_footer">
+                                                                <ul>
+                                                                    <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                    <li><a href="javascript:;">cancel</a></li>
+                                                                    <li><a href="javascript:;" class="rw_btn">Next</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="camp_relative">
+                                    <!--Trigger Modal-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact" id="add_trigger_popup" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Trigger</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img
+                                                            src="{% static '/assets/images/icons/close.svg'%}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <div class="campaigns_box trigger new_trigger">
+                                                            <div class="textmessage_box_header">
+
+                                                                <div class="text_message_title">
+                                                                    <img src="{% static '/assets/images/icons/flash_on.svg'%}" alt="trigger">
+                                                                    <h5>Trigger</h5>
+                                                                </div>
+                                                            </div>
+                                                            <p>
+                                                                Define trigger type. Triggers can be keywords, dates or tags.
+                                                            </p>
+                                                            <ul class="trigger_ul">
+                                                                <li>
+                                                                    <div class="rw_radio_btns">
+                                                                        <input type="radio" name="radio" id="Keywords" value="0" >
+                                                                        <label for="Keywords">Keywords</label>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="rw_radio_btns">
+                                                                        <input type="radio" name="radio" id="date_based" value="1">
+                                                                        <label for="date_based">Date Based</label>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="rw_radio_btns">
+                                                                        <input type="radio" name="radio" id="tags" value="2">
+                                                                        <label for="tags">Tags</label>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="textmessage_footer">
+                                                                <ul>
+                                                                    <!-- <li><a href="javascript:;" class="delete">delete</a></li> -->
+                                                                    <li><a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">cancel</a></li>
+                                                                    <li><a href="javascript:;" class="rw_btn" id="trigger_next">Next</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+
+                                    <!--Keyword Trigger Modal-->
+                                  
+                                    <div class="modal fade rw_modal campaign_modal add_contact" id="keyword_trigger_modal" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Keyword Trigger</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <div class="campaigns_box camp_absolute keyword_trigger ">
+                                                            <div class="textmessage_box_header">
+
+                                                                <div class="text_message_title">
+                                                                    <img src="{% static '/assets/images/icons/flash_on.svg'%}" alt="trigger">
+                                                                    <h5>Trigger</h5>
+                                                                </div>
+                                                            </div>
+                                                            <a href="#" class="trigger_back">
+                                                                <div class="date_based">
+                                                                    <img src="{% static '/assets/images/icons/back_arrow.svg'%}" alt="back_arrow">
+                                                                    <h6>Select Keywords</h6>
+                                                                </div>
+                                                            </a>
+                                                            <div class="rw_form_inputs rw_select2_inputs">
+                                                                <label class="rw_form_label">Select Number</label>
+                                                                <div class="rw_input">
+                                                                    <div class="rw_dropdown">
+                                                                        <div class="select_dropdown">
+                                                                            <select id="keyword_trigger_number">
+                                                                                <option value="+19255921573">+19255921573</option>
+                                                                                <option value="+19255921573">+4654645</option>
+                                                                                <option value="+19255921573">+498749849</option>
+                                                                                <option value="+19255921573">+89798494</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="rw_form_inputs" id="div_keyword">
+                                                                <label class="rw_form_label">Add Keywords</label>
+                                                                <div class="rw_input">
+                                                                    <input type="email" placeholder="Enter Keyword" id="keyword_trigger_keyword" name="keyword" maxlength="30">
+                                                                </div>
+                                                                <div class="form_error" id="keyword_error"></div>
+
+                                                            </div>
+                                                            <div class="form_error main_error"></div>
+                                                            <div class="textmessage_footer">
+                                                                <ul>
+                                                                    <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                    <li><a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">cancel</a></li>
+                                                                    <li><a href="javascript:;" class="rw_btn" id="keyword_save">Save</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+
+                                    <!--Datebased Trigger Modal-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact rw_select2_modal" id="date_trigger_modal" tabindex="-1"
+                                    aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Date based trigger</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img
+                                                            src="{% static '/assets/images/icons/close.svg'%}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <form method="post" id="date_based_form">
+                                                            {%csrf_token%}
+                                                            <input type="hidden" name="campaign_form_name" value="{{campaign_name}}">
+                                                            <div class="campaigns_box camp_absolute trigger_select_tags_box ">
+                                                                <div class="textmessage_box_header">
+
+                                                                    <div class="text_message_title">
+                                                                        <img src="{% static '/assets/images/icons/flash_on.svg'%}" alt="trigger">
+                                                                        <h5>Trigger</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="#" class="trigger_back">
+                                                                    <div class="date_based mb-3">
+
+                                                                        <img src="{% static '/assets/images/icons/back_arrow.svg'%}" alt="back_arrow">
+                                                                        <h6>Select Date</h6>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="rw_form_inputs rw_select2_inputs">
+                                                                    <label class="rw_form_label">Select Date</label>
+                                                                    <div class="rw_input">
+                                                                        <div class="rw_dropdown">
+                                                                            <div class="select_dropdown">
+                                                                                <select id="date_based_trigger_date_field">
+                                                                                    <option value="">Select Date Field</option>
+                                                                                    <option value="Birthday">Birthday</option>
+                                                                                    <option value="Anniversary">Anniversary</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form_error" id="datebased_error"></div>
+                                                                </div>
+
+                                                                <div class="rw_form_inputs rw_select2_inputs">
+                                                                    <label class="rw_form_label">Select Before Day</label>
+                                                                    <div class="rw_input">
+                                                                        <div class="rw_dropdown">
+                                                                            <div class="select_dropdown">
+                                                                                <select id="date_based_trigger_before_day">
+                                                                                    <option value="">Select Before Day</option>
+                                                                                    <option value="1">1</option>
+                                                                                    <option value="2">2</option>
+                                                                                    <option value="3">3</option>
+                                                                                    <option value="4">4</option>
+                                                                                    <option value="5">5</option>
+                                                                                    <option value="6">6</option>
+                                                                                    <option value="7">7</option>
+                                                                                    <option value="8">8</option>
+                                                                                    <option value="9">9</option>
+                                                                                    <option value="10">10</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form_error" id="before_days_error"></div>
+                                                                </div>    
+
+                                                                <div class="textmessage_footer">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                        <li><a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">cancel</a></li>
+                                                                        <li><a href="javascript:;" class="rw_btn" id="datebased_btn">Save</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--End-->
+
+                                    <!--select Tag Trigger Modal-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact" id="select_tag_trigger_modal" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4>Select Tag Trigger</h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <div class="campaigns_box camp_absolute trigger_select_tags_box ">
+                                                            <div class="textmessage_box_header">
+                                                                <div class="text_message_title">
+                                                                    <img src="{% static '/assets/images/icons/flash_on.svg' %}" alt="trigger">
+                                                                    <h5>Trigger</h5>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="rw_input">
+                                                                <label class="rw_form_label">Select Tags</label></br></br>
+                                                                <div class="rw_dropdown">
+                                                                    <div class="select_dropdown">
+                                                                        <select id="tag_based_trigger" class="form-control" multiple>                                                                            
+                                                                            <option value="birthday">Birthday</option>
+                                                                            <option value="anniversary">Anniversary</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="textmessage_footer">
+                                                                <ul>
+                                                                    <li><a href="javascript:;" class="delete">delete</a></li>
+                                                                    <li><a href="javascript:;">cancel</a></li>
+                                                                    <li><a href="javascript:;" class="rw_btn">Next</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+
+                                    <!--Edit Name-->
+                                    <div class="modal fade rw_modal campaign_modal add_contact rw_select2_modal" id="edit_name_modal" tabindex="-1"
+                                    aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="modal_title">
+                                                        <h4> Campaign Name </h4>
+                                                    </div>
+                                                    <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img
+                                                            src="{% static '/assets/images/icons/close.svg'%}" alt="close"></a>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="campaigns_action_content">
+                                                        <form id="name_form" method="post" actions="">
+                                                            {% csrf_token %}
+                                                            <div class="campaigns_box camp_absolute trigger_select_tags_box ">
+                                                                <div class="rw_form_inputs" id="div_campaign_name">
+                                                                    <label class="rw_form_label">Campaign Name</label>
+                                                                    <div class="rw_input">
+                                                                        <input type="email" placeholder="Enter Keyword" id="campaign_name"
+                                                                            name="campaign_form_name" value="{{campaign_name}}" maxlength="30">
+                                                                    </div>
+                                                                    <div class="form_error" id="campaign_name_error"></div>
+
+                                                                </div>
+                                                                <div class="textmessage_footer">
+                                                                    <ul>
+                                                                        <li><a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close">cancel</a></li>
+                                                                        <li><a href="javascript:;" class="rw_btn" id="save_campaign_btn">Save</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+                                 
+                                </div>                       
+                            </div>
+                            <input type="hidden" id="div_length">
+                            <div class="campaigns_trigger">
+                                <div class="campaigns_trigger_inner">
+                                    <div class="trigger_title_head">
+                                        <div class="trigger_title">
+                                            <img src="{% static '/assets/images/icons/flash_on.svg' %}" alt="flash_on">
+                                            <h5>Trigger</h5>
+                                        </div>                                        
+                                    </div>
+                                    <div class="trigger_add_new_btn">
+                                        <a class="add_new_trigger" id="add_trigger" style="cursor: pointer;" draggable="false">+add Trigger</a>
+                                    </div>
+                                </div>  
+                                <div class="campiagns_plus trigger_dropdown">                                    
+                                    <div class="add_btn_box trigg_add_btn">
+                                        <a href="javascript:;" class="plus_icon"></a>
+                                    </div>
+                                    <ul class="trigger_dropdown">
+                                        <li><a href="javascript:;" class="text_msg_click" id="text_message_title_id"><img src="{% static '/assets/images/icons/message.svg' %}" alt="image">Text Message</a></li>
+                                        <li><a href="javascript:;" class="time_delay_click" id="time_delay_title_id"><img src="{% static '/assets/images/icons/time.svg' %}" alt="image">Time Delay</a></li>
+                                        <li><a href="javascript:;" class="wait_until_click" id="wait_until_title_id"><img src="{% static '/assets/images/icons/wait.svg' %}" alt="image">Wait Until</a></li>
+                                        <li><a href="javascript:;" class="tag_click" id="tag_title_id"><img src="{% static '/assets/images/icons/tag.svg' %}" alt="image">Tag</a></li>
+                                    </ul>
+                                </div> 
+                                <div class="end_label">
+                                    <img src="{% static '/assets/images/icons/flag.svg' %}" alt="flag">
+                                    <h5>end</h5>
+                                </div>                         
+                            </div>                            
+                        </div>                     
+                    </div>
+                </div>
+                <div class="tab-pane" id="campaigns_setting" role="tabpanel" >
+                    <div class="rw_inner_form_inner_area">
+                        <div class="campaigns_setting_content">
+                            <div class="rw_broadcast_wrapper">
+                                <div class="rw_broadcast_inner">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="broadcast_left">
+                                                <div class="broadcast_head">
+                                                    <div class="title">
+                                                        <h4>Sending Window</h4>
+                                                        <p>Limit sending time and day for your campaign</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="broadcast_right">
+                                                <div class="camp_head">
+                                                    <div class="camp_toggle_switch">
+                                                        <div class="rw_toggle_switch">
+                                                            <div class="rw_switch">
+                                                              <input type="checkbox" id="sending_window_status" checked="">
+                                                            </div>
+                                                         </div>
+                                                         <h5>Sending Window</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="camp_content">
+                                                    <div class="camp_days">
+                                                        <div class="rw_form_inputs">
+                                                            <label  class="rw_form_label">Days</label>
+                                                        </div>
+                                                        <ul>
+                                                            <li>
+                                                                <input type="checkbox" id="monday" checked>
+                                                                <label for="monday">mon</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="tuesday" checked>
+                                                                <label for="tuesday">Tue</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="wednesday" checked>
+                                                                <label for="wednesday">Wed</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="thursday" checked>
+                                                                <label for="thursday">Thu</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="friday" >
+                                                                <label for="friday">fri</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="saturday" >
+                                                                <label for="saturday">sat</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="checkbox" id="sunday">
+                                                                <label for="sunday">sun</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="rw_form_inputs">
+                                                                <label  class="rw_form_label">Start time</label>
+                                                                <div class="rw_input">
+                                                                    <div class="rw_dropdown">
+                                                                        <div class="select_dropdown">
+                                                                            <select id="start_time">
+                                                                                <option value="1-AM">1 AM </option>
+                                                                                <option value="2-AM">2 AM </option>
+                                                                                <option value="3-AM">3 AM </option>
+                                                                                <option value="4-AM" >4 AM </option>
+                                                                                <option value="5-AM" >5 AM </option>
+                                                                                <option value="6-AM" >6 AM </option>
+                                                                                <option value="7-AM" >7 AM </option>
+                                                                                <option value="8-AM" >8 AM </option>
+                                                                                <option value="9-AM" >9 AM </option>
+                                                                                <option value="10-AM">10 AM </option>
+                                                                                <option value="11-AM">11 AM </option>
+                                                                                <option value="12-AM">12 AM </option>
+
+                                                                                <option value="1-PM">1 PM </option>
+                                                                                <option value="2-PM">2 PM </option>
+                                                                                <option value="3-PM">3 PM </option>
+                                                                                <option value="4-PM" >4 PM </option>
+                                                                                <option value="5-PM" >5 PM </option>
+                                                                                <option value="6-PM" >6 PM </option>
+                                                                                <option value="7-PM" >7 PM </option>
+                                                                                <option value="8-PM" >8 PM </option>
+                                                                                <option value="9-PM" >9 PM </option>
+                                                                                <option value="10-PM">10 PM </option>
+                                                                                <option value="11-PM">11 PM </option>
+                                                                                <option value="12-PM">12 PM </option>        
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="rw_form_inputs">
+                                                                <label  class="rw_form_label">End time</label>
+                                                                <div class="rw_input">
+                                                                    <div class="rw_dropdown">
+                                                                        <div class="select_dropdown">
+                                                                            <select id="end_time">
+                                                                                <option value="1-AM">1 AM </option>
+                                                                                <option value="2-AM">2 AM </option>
+                                                                                <option value="3-AM">3 AM </option>
+                                                                                <option value="4-AM" >4 AM </option>
+                                                                                <option value="5-AM" >5 AM </option>
+                                                                                <option value="6-AM" >6 AM </option>
+                                                                                <option value="7-AM" >7 AM </option>
+                                                                                <option value="8-AM" >8 AM </option>
+                                                                                <option value="9-AM" >9 AM </option>
+                                                                                <option value="10-AM">10 AM </option>
+                                                                                <option value="11-AM">11 AM </option>
+                                                                                <option value="12-AM">12 AM </option>
+
+                                                                                <option value="1-PM">1 PM </option>
+                                                                                <option value="2-PM">2 PM </option>
+                                                                                <option value="3-PM">3 PM </option>
+                                                                                <option value="4-PM" >4 PM </option>
+                                                                                <option value="5-PM" >5 PM </option>
+                                                                                <option value="6-PM" >6 PM </option>
+                                                                                <option value="7-PM" >7 PM </option>
+                                                                                <option value="8-PM" >8 PM </option>
+                                                                                <option value="9-PM" >9 PM </option>
+                                                                                <option value="10-PM">10 PM </option>
+                                                                                <option value="11-PM">11 PM </option>
+                                                                                <option value="12-PM">12 PM </option>        
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rw_broadcast_inner">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="broadcast_left">
+                                                <div class="broadcast_head">
+                                                    <div class="title">
+                                                        <h4>Send Number</h4>
+                                                        <p>Choose number for your campaign</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="broadcast_right">
+                                                <div class="camp_head">
+                                                    <div class="camp_toggle_switch">
+                                                            <h5>Send Number</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="camp_content">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="rw_form_inputs">
+                                                                <label  class="rw_form_label">mobile number</label>
+                                                                <div class="rw_input">
+                                                                    <div class="rw_dropdown">
+                                                                        <div class="select_dropdown">
+                                                                            <select id="send_number">
+                                                                                <option value="9255921573">+19255921573</option>
+                                                                                <option value="9255921573">+19255921573</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rw_broadcast_inner">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="broadcast_left schedule_left">
+                                                <div class="broadcast_head">
+                                                    <div class="title">
+                                                        <h4>Double Optin</h4>
+                                                        <p>Choose number for your campaign</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="broadcast_right">
+                                                <div class="camp_head">
+                                                    <div class="camp_toggle_switch">
+                                                        <div class="rw_toggle_switch">
+                                                            <div class="rw_switch">
+                                                              <input type="checkbox" id="double_optin_status" checked="">
+                                                            </div>
+                                                         </div>
+                                                         <h5>Double Optin</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="camp_content">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="rw_form_inputs mb-3" id="div_double_keyword">
+                                                                <label class="rw_form_label">keywords</label>
+                                                                <div class="rw_input">
+                                                                    <input type="email" placeholder="Enter Keyword" id="double_optin_keyword" name="double_keyword">
+                                                                </div>
+                                                                <div class="form_error" id="double_keyword_error"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="rw_form_inputs">
+                                                                <label  class="rw_form_label">Double Optin Message</label>
+                                                                <div class="rw_input">
+                                                                    <textarea id="double_optin_message"  placeholder="Type Message" ></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rw_broadcast_inner">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="broadcast_left schedule_left">
+                                                <div class="broadcast_head">
+                                                    <div class="title">
+                                                        <h4>Limit Multiple</h4>
+                                                        <p>Choose number for your campaign</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="broadcast_right">
+                                                <div class="camp_head">
+                                                    <div class="camp_toggle_switch">
+                                                        <div class="rw_toggle_switch">
+                                                            <div class="rw_switch">
+                                                              <input type="checkbox" id="limit_multiple_status" checked="">
+                                                            </div>
+                                                         </div>
+                                                         <h5>Limit Multiple</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="camp_content">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="rw_form_inputs">
+                                                                <label  class="rw_form_label">Limit Multiple Message</label>
+                                                                <div class="rw_input">
+                                                                    <textarea id="limit_multiple_message"  placeholder="Type Message" ></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rw_broadcast_inner">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="broadcast_left schedule_left">
+                                                <div class="broadcast_head">
+                                                    <div class="title">
+                                                        <h4>Cancellation Trigger</h4>
+                                                        <p>Define trigger type. Triggers can be keywords, dates or tags.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="broadcast_right">
+                                                <div class="camp_head">
+                                                    <div class="camp_toggle_switch">
+                                                        <div class="rw_toggle_switch">
+                                                            <div class="rw_switch">
+                                                                <input type="checkbox" id="cancellation_trigger_status" checked="">
+                                                            </div>
+                                                        </div>
+                                                        <h5>Cancellation Trigger</h5>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="camp_content">
+                                                    <div class="campaigns_action_content">
+                                                        <div class="campaigns_box">
+                                                            <ul class="trigger_ul">                                                                
+                                                                <li class="trigger_li">
+                                                                    <div class="rw_checkbox">
+                                                                        <input type="checkbox" class="check_input" name="checkbox" id="on_reply">
+                                                                        <label for="on_reply">On Reply</label>
+                                                                    </div>
+                                                                    <p>
+                                                                        Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Pellentesque in ipsum id
+                                                                    </p>
+                                                                </li>
+                                                                {% comment %} <li class="trigger_li">
+                                                                    <div class="rw_checkbox">
+                                                                        <input type="checkbox" class="check_input" name="checkbox" id="tag_added">
+                                                                        <label for="tag_added">Tag Added</label>
+                                                                    </div>
+                                                                    <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Pellentesque in ipsum id</p>
+                                                                    <div class="rw_form_inputs mb-3">
+                                                                        <div class="rw_select2">
+                                                                            <span class="input_icon caret"></span>
+                                                                            <select id="tag_added" class="form-control tag_added" multiple>
+                                                                                <option>AB</option>
+                                                                                <option>HB</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </li> {% endcomment %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rw_save_btn">
+                                    <a href="javascript:;" class="rw_btn" data-bs-toggle="modal" data-bs-target="#send_broadcast_popoup">Save Changes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="modal fade twilio_modal rw_modal" id="twilio_edit" tabindex="-1"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal_title">
+                        <img src="{% static '/assets/images/twilio-logo.svg' %}" alt="twilio-logo">
+                        <h4>StarBucks no 1</h4>
+                    </div>
+                  <a href="javascript:;" class="popup_close" data-bs-dismiss="modal" aria-label="Close"><img src="{% static '/assets/images/icons/close.svg' %}" alt="close"></a>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="rw_form_inputs">
+                                <label  class="rw_form_label">Account SID</label>
+                                <div class="rw_input">
+                                    <input type="text" placeholder="Account SID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="rw_form_inputs">
+                                <label  class="rw_form_label">Auth Token</label>
+                                <div class="rw_input">
+                                    <input type="password" placeholder="Auth Token" value="545646546545">
+                                    <span class="input_icon rw_eye"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                 <ul class="modal_btns">
+                     <li><a href="javascript:;" class="modal_btn cancel" data-bs-dismiss="modal">cancel</a></li>
+                     <li><a href="javascript:;" class="modal_btn" >save</a></li>
+                 </ul>
+                </div>
+              </div>
+            </div>
+          </div>        
+    </div>
+    <div class="rw_zoom_in_out">
+        <h6>80%</h6>
+        <ul>
+            <li><a href="javascript:;"><img src="{% static '/assets/images/icons/zoom_in.svg.svg' %}" alt="zoom_in"></a></li>
+            <li><a href="javascript:;"><img src="{% static '/assets/images/icons/zoom_out.svg' %}" alt="zoom_out"></a></li>
+        </ul>
+    </div>
+    <script src="{% static '/assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static '/assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static '/assets/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/assets/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static '/assets/js/select2.min.js' %}"></script>
+    <script src="{% static '/assets/js/jquery-ui.js' %}"></script>
+    <script src="{% static '/assets/js/custom.js' %}"></script>
+    <script src="{% static '/assets/js/demo.js' %}"></script>
+    <script>
+
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            var currentdate = new Date();
+            var datetime = "Campaign " + currentdate.getFullYear() + "-" + (currentdate.getMonth()+1)
+                + "-" + currentdate.getDate() + " TO " 
+                + currentdate.getHours() + ":" 
+                + currentdate.getMinutes();
+                console.log("datetime =",datetime)
+            $("#camp_name").text(datetime)
+            $("#campaign_name").val(datetime)
+
+            for(i=1; i<=12; i++)
+            {
+                if (parseInt(i / 10) == 1)
+                {
+                    $("#hour").append('<option value="'+ i +'">'+ i +'</option>')
+                }
+                else
+                {
+                    $("#hour").append('<option value="0'+ i +'">0'+ i +'</option>')
+                }
+            }
+
+            for(i=0; i<60; i++)
+            {
+                if (parseInt(i / 10) >= 1)
+                {
+                    $("#minute").append('<option value="'+ i +'">'+ i +'</option>')
+                }
+                else
+                {
+                    $("#minute").append('<option value="0'+ i +'">0'+ i +'</option>')
+                }
+            }
+        });
+
+        $("#add_trigger").on("click", function(){
+            $("#add_trigger_popup").modal("show")
+        }) 
+
+        $(document).on("click", "#text_message_title_id", function(){
+            console.log("text_message_title_id clicked")
+            $("#text_message_title_id_popup").modal("show")
+        })
+
+        $(document).on("click", "#time_delay_title_id", function(){
+            $("#time_delay_title_id_popup").modal("show")
+
+        })
+
+        $(document).on("click", "#wait_until_title_id", function(){
+            $("#wait_until_title_id_popup").modal("show")
+        })
+
+        $(document).on("click", "#tag_title_id", function(){
+            $("#select_tag_trigger").modal("show")
+        })
+
+        $(document).on("click", "#edit_name_btn", function(){
+            $("#edit_name_modal").modal("show")
+        })
+
+        $(document).on("input", "#text_message_textarea", function(){
+            console.log($(this).val().length)
+            $("#text_message_textarea_count").text($(this).val().length)
+        })
+        
+
+        $(document).on("click", "#trigger_next", function(){
+            let Keywords = $("#Keywords")[0].checked
+            let date_based = $("#date_based")[0].checked
+            let tags = $("#tags")[0].checked
+            if (Keywords == true)
+            {
+                $("#add_trigger_popup").modal("hide")
+                $("#keyword_trigger_modal").modal("show")
+            }
+            else if(date_based == true)
+            {
+                $("#add_trigger_popup").modal("hide")
+                $("#date_trigger_modal").modal("show")
+            }
+            else if(tags == true)
+            {
+                $("#add_trigger_popup").modal("hide")
+                $("#select_tag_trigger_modal").modal("show")
+            }
+        })
+
+        $(document).on("click", ".trigger_back", function()
+        {
+            $("#keyword_trigger_modal").modal("hide")
+            $("#date_trigger_modal").modal("hide")
+            $("#select_tag_trigger_modal").modal("hide")
+            $("#add_trigger_popup").modal("show")
+        });
+
+
+        //start update campaign
+        $("#save_campaign_btn").on("click", function()
+        {   
+            
+
+            var data={}
+            var csrf_token = $("[name='csrfmiddlewaretoken']").val();
+            var campaign_name=$("#campaign_name").val()
+            data['campaign_name']=campaign_name
+            data['csrfmiddlewaretoken']=csrf_token
+         
+            console.log(campaign_name)
+            console.log("Data =",data)
+            
+            $.ajax({
+                method: "POST", 
+                url: "/add_campaign/",
+                data: data,
+                dataType: 'json',
+                async: true,
+               
+                success: function (list) 
+                    {
+                        console.log("insert success")
+                        
+                    },
+                error: function(xhr, status, error) {
+                        console.log(error,"error is ");
+                      },
+                complete: function(){
+                    }
+            });
+        }) 
+        // end update
+
+
+
+
+    </script>
+</body>
+</html>
