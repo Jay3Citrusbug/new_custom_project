@@ -106,7 +106,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="text_input_box">
-                                                            <textarea  ></textarea>
+                                                            <textarea id="text_message_val" ></textarea>
                                                             <div class="input_icon_wrapper">
                                                                 <div class="input_words">
                                                                     <p>50/200 characters</p>
@@ -124,7 +124,7 @@
                                                             <ul>
                                                                 <li><a href="javascript:;" class="delete">delete</a></li>
                                                                 <li><a href="javascript:;">cancel</a></li>
-                                                                <li><a href="javascript:;" class="rw_btn">save</a></li>
+                                                                <li><a href="javascript:;" class="rw_btn" actiontype="text_message">save</a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -643,6 +643,12 @@
                                             <h5>Trigger</h5>
                                         </div>                                        
                                     </div>
+                                    {% comment %} <div class="camp_keyword">
+                                        <h5>ccc</h5>
+                                        <ul>
+                                            <li><a href="javascript:;" draggable="false">Birthday(-2 days)</a></li>
+                                        </ul>
+                                    </div> {% endcomment %}
                                     <div class="trigger_add_new_btn">
                                         <a class="add_new_trigger" id="add_trigger" style="cursor: pointer;" draggable="false">+add Trigger</a>
                                     </div>
@@ -701,31 +707,31 @@
                                                         </div>
                                                         <ul>
                                                             <li>
-                                                                <input type="checkbox" id="monday" checked>
+                                                                <input type="checkbox" id="monday"  value="monday" name="day" checked>
                                                                 <label for="monday">mon</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="tuesday" checked>
+                                                                <input type="checkbox" id="tuesday"  value="tuesday" name="day"checked>
                                                                 <label for="tuesday">Tue</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="wednesday" checked>
+                                                                <input type="checkbox" id="wednesday"  value="wednesday" name="day" checked>
                                                                 <label for="wednesday">Wed</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="thursday" checked>
+                                                                <input type="checkbox" id="thursday" value="thursday" name="day" checked>
                                                                 <label for="thursday">Thu</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="friday" >
+                                                                <input type="checkbox" id="friday" value="friday" name="day" >
                                                                 <label for="friday">fri</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="saturday" >
+                                                                <input type="checkbox" id="saturday" value="saturday" name="day" >
                                                                 <label for="saturday">sat</label>
                                                             </li>
                                                             <li>
-                                                                <input type="checkbox" id="sunday">
+                                                                <input type="checkbox" id="sunday" value="sunday" name="day">
                                                                 <label for="sunday">sun</label>
                                                             </li>
                                                         </ul>
@@ -842,7 +848,7 @@
                                                                         <div class="select_dropdown">
                                                                             <select id="send_number">
                                                                                 <option value="9255921573">+19255921573</option>
-                                                                                <option value="9255921573">+19255921573</option>
+                                                                                <option value="8875921573">+18875921573</option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1171,17 +1177,142 @@
         });
 
 
+
+
+
+
+
+
+
+
         //start update campaign
-        $("#save_campaign_btn").on("click", function()
+        $(".rw_btn").on("click", function()
         {   
-            
+            console.log("inside data ")
+            console.log($(this).attr('actiontype'),"type of action is ")
+           /* let campaign_name = $("#campaign_name").val()
+            $("#camp_name").text(campaign_name)
+            $("#campaign_name").val(campaign_name)
+            $("#edit_name_modal").modal("hide")*/
 
             var data={}
             var csrf_token = $("[name='csrfmiddlewaretoken']").val();
             var campaign_name=$("#campaign_name").val()
+            var camp_status = true
+            
+            var actiontype=$(this).attr('actiontype')//type of action
+            $("#text_message_val").val()//value of action
+        
+            var trigger_type
+            var trigger_val
+            if ($("#Keywords")[0].checked == true) {
+                trigger_type = 'Keywords'
+                trigger_val = {
+                    'number': $("#keyword_trigger_number").val(),
+                    'keyword': $("#keyword_trigger_keyword").val()
+                }
+            }
+           // else if ($("#date_based")[0].checked == true) {
+            else if ($('#date_based').is(":checked")==true){
+                trigger_type = 'date_based'
+                trigger_val = {
+                    'date_field': $("#date_based_trigger_date_field").val(),
+                    'before_day': $("#date_based_trigger_before_day").val()
+                }
+            }
+            else if ($("#tags")[0].checked == true) {
+                trigger_type = 'tags'
+                trigger_val = {
+                    'tag_based': $("#tag_based_trigger").val()
+                }
+            }
+            else
+                trigger_type = trigger_val = ''
+
+            console.log(trigger_type,"<==========type is")
+            console.log(trigger_val,"<==========val is")
+
+            /*var sending_window_days={
+
+                'monday': $("#monday")[0].checked,
+                'tuesday': $("#tuesday")[0].checked,
+                'wednesday': $("#wednesday")[0].checked,
+                'thursday': $("#thursday")[0].checked,
+                'friday': $("#friday")[0].checked,
+                'saturday':$("#saturday")[0].checked,
+                'sunday':$("#sunday")[0].checked,
+
+            }*/
+
+
+            var sending_window_days = [];
+            $.each($("input:checkbox[name='day']:checked"), function () {
+                sending_window_days.push($(this).val());
+            });
+
+
+            var sending_window_starttime = $("#start_time").val()
+            var sending_window_endtime = $("#end_time").val()
+            var sending_window_status = $("#sending_window_status")[0].checked
+            
+            var send_number_number=$("#send_number").val()
+            console.log("number is ",send_number_number)
+
+            var double_optin_keyword=$("#double_optin_keyword").val()
+            var double_optin_message=$("#double_optin_message").val()
+            var double_optin_status=$("#double_optin_status")[0].checked
+
+            var limit_multiple_status = $("#limit_multiple_status")[0].checked
+            var limit_multiple_message = $("#limit_multiple_message").val()
+
+            var cancellation_trigger_status = $("#cancellation_trigger_status")[0].checked
+            var on_reply = $("#on_reply")[0].checked
+
+            
+            var action_type=$("#text_message_title_id").val()
+
+
+
+            console.log(campaign_name)
+            console.log(camp_status)
+            console.log(trigger_type)
+            console.log(trigger_val)
+            console.log(sending_window_days)
+            console.log(sending_window_starttime)
+            console.log(sending_window_endtime)
+            console.log(sending_window_status)
+            console.log(send_number_number)
+            console.log(double_optin_keyword)
+            console.log(double_optin_message)
+
+
+
+
             data['campaign_name']=campaign_name
+            data['camp_status']=camp_status
             data['csrfmiddlewaretoken']=csrf_token
-         
+            data['trigger_type']=trigger_type
+            data['trigger_val']=JSON.stringify(trigger_val)
+            data['sending_window_days']=sending_window_days
+            data['sending_window_starttime']=sending_window_starttime
+            data['sending_window_endtime']=sending_window_endtime
+            data['sending_window_status']=sending_window_status
+            data['send_number_number']=send_number_number
+            data['double_optin_keyword']=double_optin_keyword
+            data['double_optin_message']=double_optin_message
+            data['double_optin_status']=double_optin_status
+            data['limit_multiple_status']=limit_multiple_status
+            data['limit_multiple_messasge']=limit_multiple_message
+            data['cancellation_status']=cancellation_trigger_status
+            data['cancellation_on_reply']=on_reply
+
+
+
+
+
+
+
+
             console.log(campaign_name)
             console.log("Data =",data)
             
@@ -1193,22 +1324,38 @@
                 async: true,
                
                 success: function (list) 
-                    {
+                    {    
+                        console.log(list)
                         console.log("insert success")
-                        
+                        console.log(list.data,"list dasta is=======================")
+                        $("#campaign_name").val(list.data)
+                        $("#camp_name").text(list.data)
+                        //window.location=list.url;
+                        $("#edit_name_modal").modal("hide")
+
                     },
                 error: function(xhr, status, error) {
                         console.log(error,"error is ");
+                        
+                        //window.location.reload()
                       },
                 complete: function(){
+
                     }
             });
         }) 
         // end update
-
+       
 
 
 
     </script>
 </body>
 </html>
+
+
+
+
+
+
+

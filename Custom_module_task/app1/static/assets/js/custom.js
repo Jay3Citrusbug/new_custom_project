@@ -45,7 +45,7 @@ $(document).on("click", function (e) {
 $(document).on("click", function (e) {
   if ($(".modal-backdrop").length > 1) {
     /* $(".modal-backdrop").first().remove(); */
-    console.log("hello");
+    //console.log("hello");
   } else {
     // console.log("other");
   }
